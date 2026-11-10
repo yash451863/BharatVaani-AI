@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#090d1b"><title>Bharat Voice AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400&family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+</head>
+<body data-csrf-token="{{ csrf_token() }}">
+<script>window.BHARAT_CSRF=document.body.dataset.csrfToken;</script>
+<div class="intro-stage" id="introStage" aria-hidden="true"><span>your voice, amplified.</span></div>
+<canvas id="heroRibbon" class="hero-ribbon" aria-hidden="true"></canvas>
+<div class="ambient ambient-one" aria-hidden="true"></div><div class="ambient ambient-two" aria-hidden="true"></div><div class="noise-grid" aria-hidden="true"></div>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="/"><span class="brand-logo">✳</span><span>Bharat <b>Voice AI</b></span></a>
+    <button class="new-chat" id="newChat">＋ &nbsp; New conversation</button>
+    <p class="side-heading">WORKSPACE</p>
+    <a class="side-link active" href="#assistant">◈ &nbsp; AI Assistant</a>
+    <a class="side-link" href="#voice-studio">◉ &nbsp; Voice Studio</a>
+    <p class="side-heading recent-heading">RECENT</p>
+    <div id="savedConversations" class="saved-conversations"><p class="history-empty">Your saved chats will appear here.</p></div>
+    <button class="premium-trigger" id="premiumBtn" type="button"><span>✦</span><span><b>Explore Premium</b><small>Preview upcoming plans</small></span><span>↗</span></button>
+    <button class="profile profile-button" id="profileBtn" type="button"><img class="avatar" id="sidebarAvatar" src="" alt="" hidden><span class="avatar avatar-initial" id="sidebarInitial">BV</span><span class="profile-copy"><b id="sidebarUserName">{{ current_name }}</b><small>My account · Edit profile</small></span><i></i></button>
+    <form method="post" action="{{ url_for('logout') }}" class="logout-form"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button type="submit">Log out ↗</button></form><small class="sidebar-foot">Made for India ✦</small>
+  </aside>
+
+  <main class="main" id="assistant">
+    <header class="topbar">
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu">☰</button>
+      <div class="crumb">Workspace <span>/</span> <b>AI Assistant</b></div>
+      <div class="top-actions"><label class="lang-wrap" for="languageSelect">🌐 <select id="languageSelect" aria-label="Assistant reply language"><option value="en">English</option></select></label><div class="online"><i></i> AI Workspace</div></div>
+    </header>
+
+    <div class="page">
+      <div class="hero-meta reveal"><span>BHARAT VOICE AI / 001</span><span>VOICE · INTELLIGENCE · INDIA</span><span>LIVE SYSTEM</span></div>
+      <section class="welcome" id="welcome">
+        <div class="eyebrow">✦ &nbsp; YOUR INTELLIGENT VOICE COMPANION</div>
+        <h1 class="hero-headline" id="heroHeadline">Namaste! What can I<br><span>help you</span> with?</h1>
+        <p class="subtitle">Talk naturally in English. Your ideas deserve to be heard.</p>
+        <div class="orb-area"><div class="orbit orbit-a"></div><div class="orbit orbit-b"></div>
+          <div class="orb" id="orb"><span class="orb-shine"></span><div class="orb-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+          <small id="orbStatus">Ready when you are</small>
+        </div>
+        <div class="hero-actions"><a href="#voice-studio" class="hero-cta primary-cta">Explore voice studio <span>↗</span></a><a href="#engine" class="hero-cta">Explore the engine <span>↓</span></a></div>
+        <div class="suggestions">
+          <button class="suggestion" data-prompt="Explain artificial intelligence in simple language."><span class="suggestion-icon purple">✧</span><span><b>Learn something</b><small>Explain a topic simply</small></span><em>↗</em></button>
+          <button class="suggestion" data-prompt="Help me write a professional email in English."><span class="suggestion-icon blue">⌁</span><span><b>Write for me</b><small>Emails, posts and ideas</small></span><em>↗</em></button>
+          <button class="suggestion" data-prompt="Suggest a strong project idea."><span class="suggestion-icon teal">⌘</span><span><b>Explore ideas</b><small>Projects and planning</small></span><em>↗</em></button>
+        </div>
+      </section>
+
+      <section class="chat" id="chat" aria-live="polite"><div id="messages"></div></section>
+
+      <section class="engine-band reveal" id="engine">
+        <div class="band-kicker"><span>01 · ENGINE</span><i></i><span>BUILT FOR EVERY VOICE</span></div>
+        <div class="band-heading"><h2>One voice interface.<br><span>Many ways to think.</span></h2><p>Bharat Voice AI brings speech recognition, generative intelligence and natural speech together in one simple workspace.</p></div>
+        <div class="engine-grid">
+          <article class="engine-tile"><canvas class="engine-canvas" data-kind="wave"></canvas><small>01 / LISTEN</small><h3>Speech recognition</h3><p>Turn spoken Hindi and supported languages into useful text with Gnani Prisma.</p></article>
+          <article class="engine-tile"><canvas class="engine-canvas" data-kind="blocks"></canvas><small>02 / UNDERSTAND</small><h3>Intelligent responses</h3><p>Gemini helps shape clear answers, ideas and next steps from your message.</p></article>
+          <article class="engine-tile"><canvas class="engine-canvas" data-kind="stems"></canvas><small>03 / SPEAK</small><h3>Natural voice</h3><p>Choose a supported voice and hear your words through Gnani Timbre.</p></article>
+          <article class="engine-tile"><canvas class="engine-canvas" data-kind="ring"></canvas><small>04 / PERSONALISE</small><h3>Your language, your pace</h3><p>Set a reply language, choose a speaker and tune the speaking speed.</p></article>
+        </div>
+      </section>
+      <section class="spectrum-band reveal">
+        <div class="band-kicker"><span>02 · VOICE FIELD</span><i></i><span>GENERATED IN REAL TIME</span></div>
+        <div class="spectrum-panel"><canvas id="spectrumCanvas" aria-label="Animated audio spectrum visualization"></canvas><div class="spectrum-caption"><span>VOICE SIGNAL / LIVE VISUAL</span><b id="spectrumReadout">440 HZ</b></div></div>
+      </section>
+      <section class="stats-band reveal">
+        <div class="band-kicker"><span>03 · THE SYSTEM</span><i></i><span>CORE CAPABILITIES</span></div>
+        <div class="stats-grid"><div><strong><em>03</em></strong><span>AI services connected</span></div><div><strong><em>02</em></strong><span>Voice directions · STT + TTS</span></div><div><strong><em>01</em></strong><span>Unified assistant workspace</span></div><div><strong><em>∞</em></strong><span>Ideas to explore</span></div></div>
+      </section>
+      <section class="studio" id="voice-studio">
+        <div class="section-title"><div><small>VOICE STUDIO</small><h2>Make your words come alive</h2></div><span>GNANI POWERED</span></div>
+        <div class="tool-grid">
+          <article class="tool-card">
+            <div class="tool-top"><span class="tool-icon purple">◉</span><small>PRISMA STT</small></div>
+            <h3>Speech to text</h3><p>Upload an audio clip and convert your speech into text.</p>
+            <label class="upload" for="audio"><b>↑</b><strong id="fileName">Choose an audio file</strong><small>WAV, MP3 and other audio formats</small></label>
+            <input class="hidden" type="file" id="audio" accept="audio/*">
+            <button class="action" id="transcribeBtn">Transcribe audio <span>→</span></button>
+            <textarea id="transcript" rows="3" placeholder="Your transcription will appear here..."></textarea>
+          </article>
+          <article class="tool-card tts-card">
+            <div class="tool-top"><span class="tool-icon teal">♫</span><small>TIMBRE TTS</small></div>
+            <h3>Text to speech</h3><p>Choose a voice and turn your words into natural speech.</p>
+            <label class="field-label" for="voiceSelect">Choose speaker</label>
+            <div class="voice-picker">
+              <select id="voiceSelect" aria-label="Choose voice">
+                <option value="Kaveri">Woman · Kaveri</option>
+                <option value="Pranav">Man · Pranav</option>
+                <option value="Nalini">Woman · Nalini</option>
+                <option value="Deepak">Man · Deepak</option>
+              </select>
+              <span class="voice-picker-icon">⌄</span>
+            </div>
+            <div class="voice-note" id="voiceNote">Female voice · Kaveri</div>
+            <label class="field-label" for="speechText">Your text</label>
+            <textarea class="speech-text" id="speechText" rows="4" placeholder="Write your message here..."></textarea>
+            <div class="speech-controls">
+              <label for="speechSpeed">Speaking speed <b id="speedValue">1.0×</b></label>
+              <input id="speechSpeed" type="range" min="0.85" max="1.15" step="0.05" value="1">
+            </div>
+            <button class="action" id="speakBtn">Generate voice <span>→</span></button>
+            <audio id="player" controls hidden></audio>
+          </article>
+        </div>
+      </section>
+      <section class="faq-band reveal">
+        <div class="band-kicker"><span>04 · FAQ</span><i></i><span>GOOD TO KNOW</span></div>
+        <div class="band-heading"><h2>Questions, <span>answered.</span></h2><p>A quick guide to what this current build can do.</p></div>
+        <div class="faq-list">
+          <details><summary>Can I speak to Bharat Voice AI? <b></b></summary><p>Yes. Use the microphone button in the composer, allow microphone access, speak, then review and send the transcription.</p></details>
+          <details><summary>Which AI services power this experience? <b></b></summary><p>Gnani Prisma handles speech recognition, Gemini generates chat responses, and Gnani Timbre generates speech audio.</p></details>
+          <details><summary>Are Premium plans and payments available? <b></b></summary><p>The plans shown here are a preview only. Accounts, subscriptions and payment processing are not enabled in this build.</p></details>
+          <details><summary>Does it support every Indian language? <b></b></summary><p>Language availability depends on the connected speech services and their configured models. The selector currently controls the preferred chat reply language.</p></details>
+        </div>
+      </section>
+      <section class="closing-band reveal"><p>YOUR VOICE IS THE<br><span>START OF THE INTERFACE.</span></p><a href="#assistant" class="hero-cta primary-cta">Start a conversation <span>↑</span></a></section>
+      <footer>✦ &nbsp; Bharat Voice AI <span>·</span> Your voice. Your language. Your AI.</footer>
+    </div>
+
+    <div class="composer-wrap">
+      <div class="composer"><textarea id="chatInput" rows="1" placeholder="Message Bharat Voice AI..."></textarea>
+        <div class="composer-bottom"><small>Enter to send · Shift + Enter for new line</small>
+          <div><button id="micBtn" class="mic" title="Record voice">🎙</button><button id="sendBtn" class="send" aria-label="Send">↑</button></div>
+        </div>
+      </div>
+      <p class="disclaimer">Bharat Voice AI can make mistakes. Please verify important information.</p>
+    </div>
+  </main>
+</div>
+<div class="modal-backdrop" id="profileModal" hidden><section class="premium-modal profile-modal" role="dialog" aria-modal="true" aria-labelledby="profileTitle"><button class="modal-close" id="closeProfile" aria-label="Close">✕</button><div class="eyebrow">✦ YOUR ACCOUNT</div><h2 id="profileTitle">Profile <span>settings</span></h2><form id="profileForm" class="profile-form"><div class="profile-photo-edit"><img id="profilePreview" src="" alt="Profile preview" hidden><span id="profileFallback">BV</span><label for="profilePictureInput">Change photo</label><input id="profilePictureInput" name="profile_picture" type="file" accept="image/png,image/jpeg,image/webp" hidden></div><label for="profileName">Full name</label><input id="profileName" name="name" maxlength="80" required><label for="profileEmail">Email address</label><input id="profileEmail" name="email" type="email" maxlength="254" required><small class="profile-hint">JPG, PNG or WEBP · Maximum 5 MB</small><button class="action" id="saveProfileBtn" type="submit">Save changes →</button><p id="profileMessage" class="profile-message" role="status"></p></form></section></div>
+<div class="toast" id="toast" role="status"></div>
+<div class="modal-backdrop" id="premiumModal" hidden><section class="premium-modal" role="dialog" aria-modal="true" aria-labelledby="premiumTitle"><button class="modal-close" id="closePremium" aria-label="Close">✕</button><div class="eyebrow">✦ FUTURE UPGRADES</div><h2 id="premiumTitle">Make every conversation <span>more powerful.</span></h2><p>Subscription plans are a preview. Payments and premium access are not enabled yet.</p><div class="plan-grid"><div class="plan-card"><small>STARTER</small><h3>Free</h3><p>Core voice assistant and AI chat.</p><b>Current experience</b></div><div class="plan-card featured"><small>COMING SOON</small><h3>Premium</h3><p>Planned: extended history, more voice choices and usage options.</p><b>Not available for purchase</b></div></div></section></div>
+</body></html>

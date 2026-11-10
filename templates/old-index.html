@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#090d1b"><title>Bharat Voice AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="/"><span class="brand-logo">✳</span><span>Bharat <b>Voice AI</b></span></a>
+    <button class="new-chat" id="newChat">＋ &nbsp; New conversation</button>
+    <p class="side-heading">WORKSPACE</p>
+    <a class="side-link active" href="#assistant">◈ &nbsp; AI Assistant</a>
+    <a class="side-link" href="#voice-studio">◉ &nbsp; Voice Studio</a>
+    <p class="side-heading recent-heading">RECENT</p>
+    <div class="history-item">◌ &nbsp; Welcome to Bharat Voice AI</div>
+    <div class="profile"><div class="avatar">BV</div><div><b>Bharat Voice AI</b><small>Personal assistant</small></div><i></i></div>
+    <small class="sidebar-foot">Made for India ✦</small>
+  </aside>
+
+  <main class="main" id="assistant">
+    <header class="topbar">
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu">☰</button>
+      <div class="crumb">Workspace <span>/</span> <b>AI Assistant</b></div>
+      <div class="online"><i></i> Systems online</div>
+    </header>
+
+    <div class="page">
+      <section class="welcome" id="welcome">
+        <div class="eyebrow">✦ &nbsp; YOUR INTELLIGENT VOICE COMPANION</div>
+        <h1>Namaste! What can I<br><span>help you</span> with?</h1>
+        <p class="subtitle">Talk naturally in Hindi, English or Hinglish. Your ideas deserve to be heard.</p>
+        <div class="orb-area"><div class="orbit orbit-a"></div><div class="orbit orbit-b"></div>
+          <div class="orb" id="orb"><div class="orb-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+          <small id="orbStatus">Ready when you are</small>
+        </div>
+        <div class="suggestions">
+          <button class="suggestion" data-prompt="मुझे आर्टिफिशियल इंटेलिजेंस आसान भाषा में समझाओ।"><span class="suggestion-icon purple">✧</span><span><b>Learn something</b><small>Explain a topic simply</small></span><em>↗</em></button>
+          <button class="suggestion" data-prompt="Help me write a professional email in English."><span class="suggestion-icon blue">⌁</span><span><b>Write for me</b><small>Emails, posts and ideas</small></span><em>↗</em></button>
+          <button class="suggestion" data-prompt="मुझे एक अच्छा project idea बताओ।"><span class="suggestion-icon teal">⌘</span><span><b>Explore ideas</b><small>Projects and planning</small></span><em>↗</em></button>
+        </div>
+      </section>
+
+      <section class="chat" id="chat" aria-live="polite"><div id="messages"></div></section>
+
+      <section class="studio" id="voice-studio">
+        <div class="section-title"><div><small>VOICE STUDIO</small><h2>Make your words come alive</h2></div><span>GNANI POWERED</span></div>
+        <div class="tool-grid">
+          <article class="tool-card">
+            <div class="tool-top"><span class="tool-icon purple">◉</span><small>PRISMA STT</small></div>
+            <h3>Speech to text</h3><p>Upload an audio clip and convert your speech into text.</p>
+            <label class="upload" for="audio"><b>↑</b><strong id="fileName">Choose an audio file</strong><small>WAV, MP3 and other audio formats</small></label>
+            <input class="hidden" type="file" id="audio" accept="audio/*">
+            <button class="action" id="transcribeBtn">Transcribe audio <span>→</span></button>
+            <textarea id="transcript" rows="3" placeholder="Your transcription will appear here..."></textarea>
+          </article>
+          <article class="tool-card tts-card">
+            <div class="tool-top"><span class="tool-icon teal">♫</span><small>TIMBRE TTS</small></div>
+            <h3>Text to speech</h3><p>Choose a voice and turn your words into natural speech.</p>
+            <label class="field-label" for="voiceSelect">Choose speaker</label>
+            <div class="voice-picker">
+              <select id="voiceSelect" aria-label="Choose voice">
+                <option value="Kaveri">Woman · Kaveri</option>
+                <option value="Pranav">Man · Pranav</option>
+                <option value="Nalini">Woman · Nalini</option>
+                <option value="Deepak">Man · Deepak</option>
+              </select>
+              <span class="voice-picker-icon">⌄</span>
+            </div>
+            <div class="voice-note" id="voiceNote">Female voice · Kaveri</div>
+            <label class="field-label" for="speechText">Your text</label>
+            <textarea class="speech-text" id="speechText" rows="4" placeholder="यहाँ अपना message लिखें..."></textarea>
+            <div class="speech-controls">
+              <label for="speechSpeed">Speaking speed <b id="speedValue">1.0×</b></label>
+              <input id="speechSpeed" type="range" min="0.85" max="1.15" step="0.05" value="1">
+            </div>
+            <button class="action" id="speakBtn">Generate voice <span>→</span></button>
+            <audio id="player" controls hidden></audio>
+          </article>
+        </div>
+      </section>
+      <footer>✦ &nbsp; Bharat Voice AI <span>·</span> Your voice. Your language. Your AI.</footer>
+    </div>
+
+    <div class="composer-wrap">
+      <div class="composer"><textarea id="chatInput" rows="1" placeholder="Message Bharat Voice AI..."></textarea>
+        <div class="composer-bottom"><small>Enter to send · Shift + Enter for new line</small>
+          <div><button id="micBtn" class="mic" title="Record voice">🎙</button><button id="sendBtn" class="send" aria-label="Send">↑</button></div>
+        </div>
+      </div>
+      <p class="disclaimer">Bharat Voice AI can make mistakes. Please verify important information.</p>
+    </div>
+  </main>
+</div>
+<div class="toast" id="toast"></div>
+</body></html>

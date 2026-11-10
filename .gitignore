@@ -1,0 +1,7 @@
+.env
+.flask_secret
+bharat_voice.db
+*.db-journal
+__pycache__/
+.venv/
+*.pyc
